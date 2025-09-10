@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="flex items-center justify-center min-h-screen bg-gray-100">
+  <div class="text-center p-8 bg-white rounded-lg shadow-md">
+    <h1 class="text-6xl font-bold text-red-600">500</h1>
+    <p class="text-2xl text-gray-600 mb-4">Internal Server Error</p>
+    <p class="text-gray-500 mb-8">Something went wrong on our end. We're working to fix it!</p>
+    <a href="{{ url_for('main.landing') }}" class="inline-block bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700">Go Home</a>
+  </div>
+</div>
+{% endblock %}

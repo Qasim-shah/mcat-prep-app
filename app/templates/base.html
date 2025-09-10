@@ -1,0 +1,57 @@
+<!doctype html>
+<html>
+<head>
+  <title>{{ title }} - MCAT Prep</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"></script>
+</head>
+<body class="bg-gray-100">
+  <nav class="bg-white shadow-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between h-16">
+        <div class="flex">
+          <a href="{{ url_for('main.landing') }}" class="flex-shrink-0 flex items-center">
+            MCAT Prep
+          </a>
+        </div>
+        <div class="flex items-center space-x-4">
+          {% if current_user.is_authenticated %}
+          <a href="{{ url_for('main.index') }}" class="text-gray-500 hover:text-gray-700 px-3 py-2 rounded-md text-sm font-medium">Dashboard</a>
+          <a href="{{ url_for('main.tests') }}" class="text-gray-500 hover:text-gray-700 px-3 py-2 rounded-md text-sm font-medium">Tests</a>
+          {% endif %}
+          <a href="{{ url_for('main.progress') }}" class="text-gray-500 hover:text-gray-700 px-3 py-2 rounded-md text-sm font-medium">Progress</a>
+          {% if current_user.is_admin %}
+          <a href="{{ url_for('admin.add_question') }}" class="text-gray-500 hover:text-gray-700 px-3 py-2 rounded-md text-sm font-medium">Admin</a>
+          <a href="{{ url_for('admin.add_test') }}" class="text-gray-500 hover:text-gray-700 px-3 py-2 rounded-md text-sm font-medium">Add Test</a>
+          {% endif %}
+          {% if current_user.is_authenticated and not current_user.is_subscribed %}
+          <a href="{{ url_for('main.subscribe') }}" class="text-gray-500 hover:text-gray-700 px-3 py-2 rounded-md text-sm font-medium">Subscribe</a>
+          {% endif %}
+        <div class="flex items-center">
+          {% if current_user.is_anonymous %}
+          <a href="{{ url_for('auth.login') }}" class="text-gray-500 hover:text-gray-700 px-3 py-2 rounded-md text-sm font-medium">Login</a>
+          <a href="{{ url_for('auth.register') }}" class="text-gray-500 hover:text-gray-700 px-3 py-2 rounded-md text-sm font-medium">Register</a>
+          {% else %}
+          <a href="{{ url_for('auth.logout') }}" class="text-gray-500 hover:text-gray-700 px-3 py-2 rounded-md text-sm font-medium">Logout</a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </nav>
+  <main>
+    <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+      {% with messages = get_flashed_messages() %}
+      {% if messages %}
+      <ul class="bg-blue-200 border border-blue-400 text-blue-800 px-4 py-3 rounded relative mb-4">
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+      {% endwith %}
+      {% block content %}{% endblock %}
+    </div>
+  </main>
+  <script>console.log("base.html loaded");</script>
+</body>
+</html>

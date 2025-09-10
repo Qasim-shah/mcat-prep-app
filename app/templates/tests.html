@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="px-4 py-6 sm:px-0">
+  <h2 class="text-2xl font-bold mb-6">Available Practice Tests</h2>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    {% for test in tests %}
+    <div class="bg-white p-6 rounded-lg shadow-md">
+      <h3 class="text-xl font-bold text-gray-900 mb-2">{{ test.name }}</h3>
+      <p class="text-gray-600 mb-4">{{ test.description }}</p>
+      <p class="text-gray-700">Duration: {{ test.duration_minutes }} minutes</p>
+      <p class="text-gray-700">Questions: {{ test.questions|length }}</p>
+      <a href="{{ url_for('main.take_test', test_id=test.id) }}" class="mt-4 inline-block bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700">Start Test</a>
+    </div>
+    {% else %}
+    <p>No practice tests available yet. Please check back later!</p>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

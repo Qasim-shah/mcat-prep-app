@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="flex items-center justify-center">
+  <div class="max-w-2xl w-full bg-white p-8 rounded-lg shadow-md">
+    <h2 class="text-2xl font-bold text-center mb-6">Add New Question</h2>
+    <form action="" method="post" class="space-y-4">
+        {{ form.hidden_tag() }}
+        <div>
+            {{ form.section.label(class="block text-sm font-medium text-gray-700") }}
+            {{ form.section(class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md") }}
+        </div>
+        <div>
+            {{ form.topic.label(class="block text-sm font-medium text-gray-700") }}
+            {{ form.topic(class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md") }}
+        </div>
+        <div>
+            {{ form.difficulty.label(class="block text-sm font-medium text-gray-700") }}
+            {{ form.difficulty(class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md") }}
+        </div>
+        <div>
+            {{ form.question_text.label(class="block text-sm font-medium text-gray-700") }}
+            {{ form.question_text(class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md", rows="4") }}
+        </div>
+        <div>
+            {{ form.passage_text.label(class="block text-sm font-medium text-gray-700") }}
+            {{ form.passage_text(class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md", rows="6") }}
+        </div>
+        <div>
+            {{ form.option_a.label(class="block text-sm font-medium text-gray-700") }}
+            {{ form.option_a(class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md") }}
+        </div>
+        <div>
+            {{ form.option_b.label(class="block text-sm font-medium text-gray-700") }}
+            {{ form.option_b(class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md") }}
+        </div>
+        <div>
+            {{ form.option_c.label(class="block text-sm font-medium text-gray-700") }}
+            {{ form.option_c(class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md") }}
+        </div>
+        <div>
+            {{ form.option_d.label(class="block text-sm font-medium text-gray-700") }}
+            {{ form.option_d(class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md") }}
+        </div>
+        <div>
+            {{ form.correct_answer.label(class="block text-sm font-medium text-gray-700") }}
+            {{ form.correct_answer(class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md") }}
+        </div>
+        <div>
+            {{ form.explanation.label(class="block text-sm font-medium text-gray-700") }}
+            {{ form.explanation(class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md", rows="4") }}
+        </div>
+        <div>
+            {{ form.submit(class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500") }}
+        </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

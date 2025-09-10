@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="flex items-center justify-center">
+  <div class="max-w-2xl w-full bg-white p-8 rounded-lg shadow-md">
+    <div class="mb-4 flex justify-around">
+      <a href="{{ url_for('main.practice', difficulty='All') }}" class="px-4 py-2 rounded-md {% if current_difficulty == 'All' %}bg-blue-500 text-white{% else %}bg-gray-200 text-gray-700{% endif %}">All</a>
+      <a href="{{ url_for('main.practice', difficulty='Easy') }}" class="px-4 py-2 rounded-md {% if current_difficulty == 'Easy' %}bg-blue-500 text-white{% else %}bg-gray-200 text-gray-700{% endif %}">Easy</a>
+      <a href="{{ url_for('main.practice', difficulty='Medium') }}" class="px-4 py-2 rounded-md {% if current_difficulty == 'Medium' %}bg-blue-500 text-white{% else %}bg-gray-200 text-gray-700{% endif %}">Medium</a>
+      <a href="{{ url_for('main.practice', difficulty='Hard') }}" class="px-4 py-2 rounded-md {% if current_difficulty == 'Hard' %}bg-blue-500 text-white{% else %}bg-gray-200 text-gray-700{% endif %}">Hard</a>
+    </div>
+    {% if question %}
+      {% if question.passage_text %}
+        <div class="mb-6 p-4 bg-gray-50 rounded-lg border border-gray-200">
+          <h3 class="text-lg font-bold mb-2">Passage:</h3>
+          <p class="whitespace-pre-wrap">{{ question.passage_text }}</p>
+        </div>
+      {% endif %}
+      <h2 class="text-xl font-bold mb-4">Question:</h2>
+      <p class="text-gray-600 text-sm mb-2">Difficulty: {{ question.difficulty }}</p>
+      <p class="mb-6">{{ question.question_text }}</p>
+
+      <form method="post" class="space-y-4">
+        <input type="hidden" name="question_id" value="{{ question.id }}">
+        <label class="block">
+          <input type="radio" name="answer" value="A" class="mr-2"> A. {{ question.option_a }}
+        </label>
+        <label class="block">
+          <input type="radio" name="answer" value="B" class="mr-2"> B. {{ question.option_b }}
+        </label>
+        <label class="block">
+          <input type="radio" name="answer" value="C" class="mr-2"> C. {{ question.option_c }}
+        </label>
+        <label class="block">
+          <input type="radio" name="answer" value="D" class="mr-2"> D. {{ question.option_d }}
+        </label>
+        <div class="flex items-center mt-4">
+          <input type="checkbox" name="flag_question" id="flag_question" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
+          <label for="flag_question" class="ml-2 block text-sm text-gray-900">Flag this question</label>
+        </div>
+        <button type="submit" class="mt-6 w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700">Submit Answer</button>
+        <input type="hidden" name="time_spent" id="time_spent" value="0">
+      </form>
+
+      {% if show_explanation %}
+        <div class="mt-8 p-4 rounded-md {% if is_correct %}bg-green-100 text-green-800{% else %}bg-red-100 text-red-800{% endif %}">
+          <h3 class="font-bold">Your Answer: {{ user_answer }} - {% if is_correct %}Correct!{% else %}Incorrect{% endif %}</h3>
+          <p class="mt-2">Correct Answer: {{ question.correct_answer }}</p>
+          <p class="mt-2">Explanation: {{ question.explanation }}</p>
+          <p class="mt-2">Time Spent: {{ time_spent_question }} seconds</p>
+        </div>
+        <div class="mt-4">
+          <a href="{{ url_for('main.practice') }}" class="w-full bg-gray-200 text-gray-800 py-2 px-4 rounded-md hover:bg-gray-300 block text-center">Next Question</a>
+        </div>
+      {% endif %}
+
+    {% else %}
+      <p>No questions available.</p>
+    {% endif %}
+  </div>
+</div>
+<script>
+  let startTime;
+
+  document.addEventListener('DOMContentLoaded', () => {
+    startTime = Date.now();
+  });
+
+  document.querySelector('form').addEventListener('submit', () => {
+    const endTime = Date.now();
+    const timeTaken = Math.round((endTime - startTime) / 1000); // in seconds
+    document.getElementById('time_spent').value = timeTaken;
+  });
+</script>
+{% endblock %}

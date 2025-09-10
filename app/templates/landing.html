@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="relative min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-blue-500 to-purple-600 text-white overflow-hidden">
+
+  <!-- Background elements for aesthetic -->
+  <div class="absolute top-0 left-0 w-full h-full opacity-20" style="background-image: url('{{ url_for('static', filename='images/hero-bg.svg') }}'); background-size: cover; background-position: center;"></div>
+  <div class="absolute inset-0 bg-black opacity-40"></div>
+
+  <div class="relative z-10 max-w-5xl mx-auto px-4 py-16 text-center">
+    <h1 class="text-6xl font-extrabold leading-tight mb-6 animate-fade-in-up">
+      Master the MCAT. Unlock Your Future.
+    </h1>
+    <p class="text-2xl font-light mb-10 animate-fade-in-up animation-delay-200">
+      Your comprehensive platform for MCAT preparation. Designed for perfection.
+    </p>
+
+    <div class="flex justify-center space-x-6 animate-fade-in-up animation-delay-400">
+      <a href="{{ url_for('auth.register') }}" class="inline-flex items-center justify-center px-8 py-4 border border-transparent text-lg font-semibold rounded-full shadow-lg text-white bg-green-500 hover:bg-green-600 transform hover:scale-105 transition duration-300 ease-in-out">
+        Start Your Free Trial
+      </a>
+      {% if current_user.is_authenticated %}
+      <a href="/dashboard" class="inline-flex items-center justify-center px-8 py-4 border border-white text-lg font-semibold rounded-full shadow-lg text-white hover:bg-white hover:text-blue-600 transform hover:scale-105 transition duration-300 ease-in-out">
+        Go to Dashboard
+      </a>
+      {% else %}
+      <a href="{{ url_for('auth.login') }}" class="inline-flex items-center justify-center px-8 py-4 border border-white text-lg font-semibold rounded-full shadow-lg text-white hover:bg-white hover:text-blue-600 transform hover:scale-105 transition duration-300 ease-in-out">
+        Login
+      </a>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="relative z-10 mt-20 w-full bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-t-3xl p-12 shadow-2xl animate-slide-up">
+    <h2 class="text-4xl font-bold text-white mb-10 text-center">
+      Why Choose MCAT Prep Pro?
+    </h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-10 text-left">
+      <div class="flex flex-col items-center">
+        <div class="p-4 bg-white bg-opacity-20 rounded-full mb-4">
+          <svg class="h-12 w-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        </div>
+        <h3 class="text-xl font-semibold mb-3">Comprehensive Content</h3>
+        <p class="text-center text-gray-200">Access thousands of high-yield MCAT questions, passages, and detailed explanations covering all sections.</p>
+      </div>
+      <div class="flex flex-col items-center">
+        <div class="p-4 bg-white bg-opacity-20 rounded-full mb-4">
+          <svg class="h-12 w-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
+        </div>
+        <h3 class="text-xl font-semibold mb-3">Advanced Analytics</h3>
+        <p class="text-center text-gray-200">Track your progress with intuitive dashboards, performance graphs, and mastery scores to pinpoint areas for improvement.</p>
+      </div>
+      <div class="flex flex-col items-center">
+        <div class="p-4 bg-white bg-opacity-20 rounded-full mb-4">
+          <svg class="h-12 w-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        </div>
+        <h3 class="text-xl font-semibold mb-3">Realistic Practice Tests</h3>
+        <p class="text-center text-gray-200">Simulate the actual MCAT experience with timed, full-length practice exams and detailed score reports.</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<style>
+  @keyframes fadeInFromBottom {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-fade-in-up {
+    animation: fadeInFromBottom 0.8s ease-out forwards;
+  }
+
+  .animation-delay-200 {
+    animation-delay: 0.2s;
+  }
+
+  .animation-delay-400 {
+    animation-delay: 0.4s;
+  }
+
+  @keyframes slideUp {
+    from {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.8s ease-out forwards;
+    animation-delay: 0.6s; /* Adjust delay as needed */
+  }
+</style>
+{% endblock %}

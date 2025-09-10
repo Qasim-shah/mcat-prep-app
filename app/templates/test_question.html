@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="flex items-center justify-center">
+  <div class="max-w-2xl w-full bg-white p-8 rounded-lg shadow-md">
+    <h2 class="text-2xl font-bold mb-4">{{ test.name }}</h2>
+    <div class="text-right text-lg font-semibold mb-4">Time Left: <span id="timer"></span></div>
+
+    {% if current_question %}
+      {% if current_question.passage_text %}
+        <div class="mb-6 p-4 bg-gray-50 rounded-lg border border-gray-200">
+          <h3 class="text-lg font-bold mb-2">Passage:</h3>
+          <p class="whitespace-pre-wrap">{{ current_question.passage_text }}</p>
+        </div>
+      {% endif %}
+      <h3 class="text-xl font-bold mb-4">Question {{ current_question_index + 1 }} of {{ total_questions }}:</h3>
+      <p class="text-gray-600 text-sm mb-2">Difficulty: {{ current_question.difficulty }}</p>
+      <p class="mb-6">{{ current_question.question_text }}</p>
+
+      <form method="post" action="{{ url_for('main.submit_test_answer', test_id=test.id, question_index=current_question_index) }}" class="space-y-4">
+        <input type="hidden" name="question_id" value="{{ current_question.id }}">
+        <input type="hidden" name="start_time" id="start_time" value="{{ start_time }}">
+        <label class="block">
+          <input type="radio" name="answer" value="A" class="mr-2"> A. {{ current_question.option_a }}
+        </label>
+        <label class="block">
+          <input type="radio" name="answer" value="B" class="mr-2"> B. {{ current_question.option_b }}
+        </label>
+        <label class="block">
+          <input type="radio" name="answer" value="C" class="mr-2"> C. {{ current_question.option_c }}
+        </label>
+        <label class="block">
+          <input type="radio" name="answer" value="D" class="mr-2"> D. {{ current_question.option_d }}
+        </label>
+        <button type="submit" class="mt-6 w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700">Next Question</button>
+      </form>
+
+    {% else %}
+      <p>No questions available for this test.</p>
+    {% endif %}
+  </div>
+</div>
+
+<script>
+  const duration = {{ test.duration_minutes }} * 60; // total seconds
+  const startTime = {{ start_time }};
+  const timerElement = document.getElementById('timer');
+
+  function updateTimer() {
+    const now = Math.floor(Date.now() / 1000); // current time in seconds
+    const elapsed = now - startTime;
+    const timeLeft = duration - elapsed;
+
+    if (timeLeft <= 0) {
+      timerElement.textContent = '00:00';
+      alert('Time is up! Submitting your test.');
+      document.querySelector('form').submit(); // Auto-submit when time is up
+      return;
+    }
+
+    const minutes = Math.floor(timeLeft / 60);
+    const seconds = timeLeft % 60;
+
+    timerElement.textContent = 
+      `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+
+    setTimeout(updateTimer, 1000);
+  }
+
+  updateTimer();
+</script>
+{% endblock %}

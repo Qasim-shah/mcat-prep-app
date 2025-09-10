@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="flex items-center justify-center">
+  <div class="max-w-2xl w-full bg-white p-8 rounded-lg shadow-md text-center">
+    <h2 class="text-2xl font-bold mb-4">Test Results for {{ test_result.test.name }}</h2>
+    <p class="text-gray-700 text-lg mb-2">Your Score: <span class="font-bold text-blue-600">{{ "%.2f"|format(test_result.score) }}%</span></p>
+    <p class="text-gray-700 text-lg mb-6">Time Taken: <span class="font-bold">{{ test_result.time_taken_minutes }} minutes</span></p>
+
+    <h3 class="text-xl font-bold mb-4">Summary:</h3>
+    <p class="text-gray-700 mb-6">You answered {{ test_result.score / 100 * test_result.test.questions|length | round(0) }} questions correctly out of {{ test_result.test.questions|length }}.</p>
+
+    <a href="{{ url_for('main.tests') }}" class="inline-block bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700">Back to Tests</a>
+  </div>
+</div>
+{% endblock %}
